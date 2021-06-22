@@ -15,6 +15,7 @@ import {getLoggedUser, getUsers} from "../../actions/usersActions";
 import {getPublications} from "../../actions/publicationsActions";
 import {getComments} from "../../actions/commentsActions";
 import {getPhotos} from "../../actions/photosActions";
+import Workspace from "../Workspace/Workspace";
 
 type GetUsers = ReturnType<typeof getUsers>
 type GetLoggedUser = ReturnType<typeof getLoggedUser>
@@ -63,6 +64,10 @@ const MainWrapper: FC = () => {
 
                             <Route path='/profile'>
                                 <Profile />
+                            </Route>
+
+                            <Route path='/workspace'>
+                                <Workspace />
                             </Route>
 
                             <Route path='/'>
