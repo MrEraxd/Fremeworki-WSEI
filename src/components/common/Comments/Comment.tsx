@@ -2,7 +2,6 @@ import styled from "styled-components";
 import {ISingleUser} from "../../../entities/user";
 import {useSelector} from "react-redux";
 import {IState} from "../../../reducers/reducers";
-import {IUsersReducer} from "../../../reducers/usersReducres";
 import {IPhotoReducer} from "../../../reducers/photosReducer";
 
 const Wrapper = styled.div`
@@ -43,7 +42,7 @@ interface IWork {
 
 
 
-const Work = (props: IWork) => {
+const Comment = (props: IWork) => {
 
     const { photos } = useSelector<IState, IPhotoReducer>(state => ({
         ...state.photos
@@ -66,4 +65,4 @@ const Work = (props: IWork) => {
     )
 }
 
-export default Work;
+export default Comment;

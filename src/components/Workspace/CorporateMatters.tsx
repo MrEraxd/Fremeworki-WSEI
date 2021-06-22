@@ -2,6 +2,7 @@ import React, {FC} from "react";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
+    margin-bottom: 16px;
 `
 
 const TopBar = styled.div`
