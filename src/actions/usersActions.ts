@@ -1,0 +1,32 @@
+import { Dispatch } from 'redux';
+import * as actionTypes from "./actionTypes/userTypes";
+import { ISingleUser } from "../entities/user";
+
+export const getUsers = (): Promise<ISingleUser[]> => ((dispatch: Dispatch) => {
+    return fetch("https://jsonplaceholder.typicode.com/users")
+        .then(response => response.json())
+        .then((usersList: ISingleUser[]) => {
+            dispatch({
+                type: actionTypes.GET_USERS,
+                usersList
+            })
+        })
+}) as any;
+
+export const getLoggedUser = (): Promise<ISingleUser[]> => ((dispatch: Dispatch) => {
+    return fetch("https://jsonplaceholder.typicode.com/users/1")
+        .then(response => response.json())
+        .then((loggedUser: ISingleUser) => {
+            dispatch({
+                type: actionTypes.GET_LOGGED_USER,
+                loggedUser
+            })
+        })
+}) as any;
+
+export const getSomeData = (someData: string): Promise<ISingleUser[]> => ((dispatch: Dispatch) => {
+    dispatch({
+        type: actionTypes.PUSH_DATA,
+        someData
+    })
+}) as any;
