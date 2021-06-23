@@ -5,6 +5,7 @@ import {IUsersReducer} from "../../reducers/usersReducres";
 import {IState} from "../../reducers/reducers";
 import { Link } from "react-router-dom";
 import {IPhotoReducer} from "../../reducers/photosReducer";
+import {IWorkspaceReducer} from "../../reducers/workspacesReducer";
 
 const Wrapper = styled.div`
   position: absolute;
@@ -46,7 +47,7 @@ const MenuGroupTitle = styled.div`
 `
 
 const MenuElementIcon = styled.img`
-
+    height: 24px;
 `
 
 const CustomFilter = styled.input`
@@ -88,11 +89,43 @@ const expandedMenu: FC = () => {
     }))
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { workspaces } = useSelector<IState, IWorkspaceReducer>(state => ({
+        ...state.workspaces
+    }))
+
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [inputText, setInputText] = useState<string>('');
 
     const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
         setInputText(text);
+    }
+
+    const changeActualStorage = (JSONString: string) => {
+        console.log(JSONString)
+        localStorage.setItem("actualWorkspace", JSONString)
+    }
+
+    const workspacesToDisplay = [];
+
+    for(let i = 0; i < 4; i++){
+
+        let JSONObj = {
+            title: workspaces[i].title,
+            body: workspaces[i].body,
+            iconImgUrl: photos[workspaces[i].id].url
+        }
+
+        if(workspaces[i].title.toLowerCase().includes(inputText.toLowerCase())){
+            workspacesToDisplay.push(
+                <Link to="/workspace" onClick={() => changeActualStorage(JSON.stringify(JSONObj))}>
+                    <MenuElement>
+                        <MenuElementIcon src={photos[workspaces[i].id].url}/>
+                        <span>{workspaces[i].title.substring(0, 16)}</span>
+                    </MenuElement>
+                </Link>
+            )
+        }
     }
 
     return (
@@ -103,26 +136,36 @@ const expandedMenu: FC = () => {
                 <MenuGroupTitle>Platform</MenuGroupTitle>
             }
             {'Home'.toLowerCase().includes(inputText.toLowerCase()) &&
-                <MenuElement><MenuElementIcon src={"./media/icons/house2.png"}/><span>Home</span></MenuElement>
+                <Link to="/">
+                    <MenuElement><MenuElementIcon src={"./media/icons/house2.png"}/><span>Home</span></MenuElement>
+                </Link>
             }
             {'Publications'.toLowerCase().includes(inputText.toLowerCase()) &&
-                <MenuElement><MenuElementIcon src={"./media/icons/publications.png"}/><span>Publications</span></MenuElement>
+                <Link to="/mock">
+                    <MenuElement><MenuElementIcon src={"./media/icons/publications.png"}/><span>Publications</span></MenuElement>
+                </Link>
             }
             {'People'.toLowerCase().includes(inputText.toLowerCase()) &&
-                <MenuElement><MenuElementIcon src={"./media/icons/people.png"}/><span>People</span></MenuElement>
+                <Link to="/mock">
+                    <MenuElement><MenuElementIcon src={"./media/icons/people.png"}/><span>People</span></MenuElement>
+                </Link>
             }
             {'Entities'.toLowerCase().includes(inputText.toLowerCase()) &&
-                <MenuElement><MenuElementIcon src={"./media/icons/entities.png"}/><span>Entities</span></MenuElement>
+                <Link to="/entities">
+                    <MenuElement><MenuElementIcon src={"./media/icons/entities.png"}/><span>Entities</span></MenuElement>
+                </Link>
             }
             {'Administration'.toLowerCase().includes(inputText.toLowerCase()) &&
-                <MenuElement><MenuElementIcon src={"./media/icons/administration.png"}/><span>Administration</span></MenuElement>
+                <Link to="/mock">
+                    <MenuElement><MenuElementIcon src={"./media/icons/administration.png"}/><span>Administration</span></MenuElement>
+                </Link>
             }
 
             {'Workspaces'.toLowerCase().includes(inputText.toLowerCase()) &&
                 <MenuGroupTitle>Workspaces</MenuGroupTitle>
             }
 
-            {'Client contract'.toLowerCase().includes(inputText.toLowerCase()) &&
+            {/*{'Client contract'.toLowerCase().includes(inputText.toLowerCase()) &&
                 <MenuElement><MenuElementIcon src={"./media/icons/house2.png"}/><span>Client contract</span></MenuElement>
             }
             {'Supplier contract'.toLowerCase().includes(inputText.toLowerCase()) &&
@@ -136,8 +179,9 @@ const expandedMenu: FC = () => {
             }
             {'Real estate contracts'.toLowerCase().includes(inputText.toLowerCase()) &&
                 <MenuElement><MenuElementIcon src={"./media/icons/house2.png"}/><span>Real estate contracts</span></MenuElement>
-            }
+            }*/}
 
+            {workspacesToDisplay}
 
             <MenuGroup style={{borderTop: "1px solid #EBEBEB"}}>
                 <MenuGroupTitle>Account</MenuGroupTitle>
@@ -150,8 +194,12 @@ const expandedMenu: FC = () => {
                         </AccountInfoWrapper>
                     </MenuElement>
                 </Link>
-                <MenuElement><MenuElementIcon src={"./media/icons/privacy.png"}/><span>Privacy</span></MenuElement>
-                <MenuElement><MenuElementIcon src={"./media/icons/settings.png"}/><span>Settings</span></MenuElement>
+                <Link to="/mock">
+                    <MenuElement><MenuElementIcon src={"./media/icons/privacy.png"}/><span>Privacy</span></MenuElement>
+                </Link>
+                <Link to="/mock">
+                    <MenuElement><MenuElementIcon src={"./media/icons/settings.png"}/><span>Settings</span></MenuElement>
+                </Link>
             </MenuGroup>
 
             <MenuGroup style={{borderTop: "1px solid #EBEBEB"}}>

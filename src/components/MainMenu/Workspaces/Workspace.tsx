@@ -1,5 +1,7 @@
-import {FC} from "react";
+import {FC, MouseEvent} from "react";
 import styled from "styled-components";
+import {IWorkspaceInfo} from "../../../entities/workspace";
+import {Link} from "react-router-dom"
 
 const Wrapper = styled.div`
     flex-grow: 1;
@@ -10,7 +12,7 @@ const Wrapper = styled.div`
   box-shadow: 0px 3px 10px -5px rgba(0,0,0,0.56);
 `;
 
-const BackgroundImage = styled.div`
+const BackgroundImage = styled.img`
     height: 40%;
     width: 100%;
     background-color: red;
@@ -37,7 +39,7 @@ const TitleWithImageWrapper = styled.div`
   position: relative;
 `
 
-const CustomImage = styled.div`
+const CustomImage = styled.img`
   height: 80px;
   width: 80px;
   position: absolute;
@@ -59,24 +61,43 @@ const Title = styled.div`
   font-weight: bold;
 `
 
-const Workspace: FC = () => {
+interface IExtendedWorkspaceInfo extends IWorkspaceInfo{
+    backgroundImgUrl: string;
+    iconImgUrl: string;
+}
+
+const changeActualStorage = (JSONString: string) => {
+    console.log(JSONString)
+    localStorage.setItem("actualWorkspace", JSONString)
+}
+
+const Workspace = (props: IExtendedWorkspaceInfo) => {
+
+    const JSONObj = {
+        title: props.title,
+        body: props.body,
+        iconImgUrl: props.iconImgUrl
+    }
+
     return (
-        <Wrapper>
-            <BackgroundImage/>
-            <Desc>
-                <TitleWithImageWrapper>
-                    <CustomImage></CustomImage>
-                    <Title>Client contract</Title>
-                </TitleWithImageWrapper>
-                <div>
-                    <CustomIcon src={"./media/icons/privacy.png"}/>
-                    <span>Contract</span>
-                    <CustomIcon src={"./media/icons/people.png"}/>
-                    <span>150 users</span>
-                </div>
-                <UpdateTime>Last updated 2 days ago</UpdateTime>
-            </Desc>
-        </Wrapper>
+        <Link to={"/workspace"} onClick={() => changeActualStorage(JSON.stringify(JSONObj))}>
+            <Wrapper>
+                <BackgroundImage src={props.backgroundImgUrl}/>
+                <Desc>
+                    <TitleWithImageWrapper>
+                        <CustomImage src={props.iconImgUrl}/>
+                        <Title>{props.title?.substring(1, 16)}</Title>
+                    </TitleWithImageWrapper>
+                    <div>
+                        <CustomIcon src={"./media/icons/privacy.png"}/>
+                        <span>{props.body?.substring(1, 10)}</span>
+                        <CustomIcon src={"./media/icons/people.png"}/>
+                        <span>150 users</span>
+                    </div>
+                    <UpdateTime>Last updated 2 days ago</UpdateTime>
+                </Desc>
+            </Wrapper>
+        </Link>
     )
 }
 

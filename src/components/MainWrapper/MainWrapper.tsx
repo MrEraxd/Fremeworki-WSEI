@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from "react";
+import React, {FC, useEffect, useState} from "react";
 import TopNav from "../TopNav/TopNav";
 import LeftMenu from "../LeftMenu/LeftMenu";
 import MainMenu from "../MainMenu/MainMenu";
@@ -16,12 +16,15 @@ import {getPublications} from "../../actions/publicationsActions";
 import {getComments} from "../../actions/commentsActions";
 import {getPhotos} from "../../actions/photosActions";
 import Workspace from "../Workspace/Workspace";
+import Mock from "../Mock/Mock";
+import {getWorkspaces} from "../../actions/workspacesActions";
 
 type GetUsers = ReturnType<typeof getUsers>
 type GetLoggedUser = ReturnType<typeof getLoggedUser>
 type GetPublications = ReturnType<typeof getPublications>
 type GetComments = ReturnType<typeof getComments>
 type GetPhotos = ReturnType<typeof getPhotos>
+type GetWorkspaces = ReturnType<typeof getWorkspaces>
 
 const Wrapper = styled.section`
 `
@@ -39,6 +42,13 @@ const Content = styled.div`
   margin-right: auto;
 `
 
+export interface ActualWorkspaceInfo {
+    iconURL: string;
+    title: string;
+    body: string;
+}
+
+
 const MainWrapper: FC = () => {
     const dispatch = useDispatch();
 
@@ -48,6 +58,7 @@ const MainWrapper: FC = () => {
         dispatch<GetPublications>(getPublications());
         dispatch<GetComments>(getComments());
         dispatch<GetPhotos>(getPhotos());
+        dispatch<GetWorkspaces>(getWorkspaces());
     }, []);
 
     return (
@@ -59,7 +70,7 @@ const MainWrapper: FC = () => {
                     <MainContentWrapper>
                         <Switch>
                             <Route path='/entities'>
-                                test
+                                entities
                             </Route>
 
                             <Route path='/profile'>
@@ -67,11 +78,15 @@ const MainWrapper: FC = () => {
                             </Route>
 
                             <Route path='/workspace'>
-                                <Workspace />
+                                <Workspace/>
+                            </Route>
+
+                            <Route path='/mock'>
+                                <Mock />
                             </Route>
 
                             <Route path='/'>
-                                <MainMenu />
+                                <MainMenu/>
                             </Route>
                         </Switch>
                     </MainContentWrapper>

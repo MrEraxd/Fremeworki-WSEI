@@ -82,19 +82,22 @@ const ShortProfile: FC = () => {
                     <JobTitle>{loggedUser.company.bs}</JobTitle>
                 </ProfileInfo>
             </Link>
-
             <ProfileButtonsWrapper>
-                <ProfileRowWrapper style={{marginBottom: '16px'}}>
-                    <ProfileRowIcon src="./media/icons/network.png" alt="Network.png"/>
-                    <ProfileRowText>Your network</ProfileRowText>
-                    <ProfileRowButton src="./media/icons/user-plus.png" alt="UserPlus.png"/>
-                </ProfileRowWrapper>
-                
-                <ProfileRowWrapper>
-                    <ProfileRowIcon src="./media/icons/publications.png" alt="Logo.png"/>
-                    <ProfileRowText>Your Publications</ProfileRowText>
-                    <ProfileRowButton src="./media/icons/plus.png" alt="Plus.png"/>
-                </ProfileRowWrapper>
+                <Link to="/mock">
+                    <ProfileRowWrapper style={{marginBottom: '16px'}}>
+                        <ProfileRowIcon src="./media/icons/network.png" alt="Network.png"/>
+                        <ProfileRowText>Your network</ProfileRowText>
+                        <ProfileRowButton src="./media/icons/user-plus.png" alt="UserPlus.png"/>
+                    </ProfileRowWrapper>
+                </Link>
+
+                <Link to="/mock">
+                    <ProfileRowWrapper>
+                        <ProfileRowIcon src="./media/icons/publications.png" alt="Logo.png"/>
+                        <ProfileRowText>Your Publications</ProfileRowText>
+                        <ProfileRowButton src="./media/icons/plus.png" alt="Plus.png"/>
+                    </ProfileRowWrapper>
+                </Link>
             </ProfileButtonsWrapper>
         </ShortProfileWrapper>
     )

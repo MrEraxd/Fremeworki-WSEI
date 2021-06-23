@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useState} from "react";
+import React, {ChangeEvent, FC, MouseEvent, useState} from "react";
 import styled from "styled-components";
 import Comment from "./Comment";
 import {useSelector} from "react-redux";
@@ -7,7 +7,7 @@ import {IUsersReducer} from "../../../reducers/usersReducres";
 import {ICommentReducer} from "../../../reducers/commentsReducer";
 import CommentButtons from "./CommentButtons";
 import useDropdown from "react-dropdown-hook";
-import ExpandedCommentMenu from "./ExpandedCommentMenu";
+
 
 const Wrapper = styled.div`
   
@@ -72,6 +72,31 @@ const CustomIcons = styled.img`
   margin-left: 12px;
 `
 
+const BlockWrapper = styled.div`
+  border: 2px solid #eeeeee;
+  border-top: none;
+`
+
+const Block = styled.button`
+  padding: 8px 8px 8px 16px;
+  width: 100%;
+  display: flex;
+  box-sizing: border-box;
+  outline: none;
+  border: none;
+  background-color: white;
+
+  > span {
+    justify-self: center;
+    padding-left: 10px;
+  }
+
+  &:hover{
+    background-color: #eee;
+    cursor: pointer;
+  }
+`
+
 type CommentsProps = {
     title: string;
     showButtons: boolean;
@@ -83,28 +108,57 @@ const Comments: FC<CommentsProps> = ({title, showButtons}) => {
         ...state.comments
     }))
 
-    const { usersList } = useSelector<IState, IUsersReducer>(state => ({
+    const { usersList, loggedUser } = useSelector<IState, IUsersReducer>(state => ({
         ...state.users
     }))
 
     let workToDisplay = [];
 
     const [inputText, setInputText] = useState<string>('');
+    const [onlyFollowed, showOnlyFollowed] = useState<boolean>(false);
 
     for(let i = 0; i < 100; i++) {
         if(comments[i]?.name.toLowerCase().includes(inputText.toLowerCase())){
-            workToDisplay.push(<Comment
-                key={i + "Work"}
-                title={comments[i]?.name}
-                user={usersList[comments[i]?.postId]}
-                body={comments[i]?.body}
-            />)
+            if(onlyFollowed && comments[i]?.postId === loggedUser.id){
+                workToDisplay.push(<Comment
+                    key={i + "Work"}
+                    title={comments[i]?.name}
+                    user={usersList[comments[i]?.postId]}
+                    body={comments[i]?.body}
+                />)
+            }
+            else if(!onlyFollowed){
+                workToDisplay.push(<Comment
+                    key={i + "Work"}
+                    title={comments[i]?.name}
+                    user={usersList[comments[i]?.postId]}
+                    body={comments[i]?.body}
+                />)
+            }
         }
     }
 
     const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
         setInputText(text);
+    }
+
+    const followedButtonHandler = (e: MouseEvent) => {
+        console.log((e.target as HTMLButtonElement).innerText.toLowerCase());
+        if((e.target as HTMLButtonElement).innerText.toLowerCase() === "all"){
+            showOnlyFollowed(false);
+        }
+        else{
+            showOnlyFollowed(true);
+        }
+    }
+
+    const onlyFollowedDisplayHandler = (): string => {
+        if(onlyFollowed){
+            return "Followed";
+        }
+
+        return "All";
     }
 
     const showedButtons = () => {
@@ -123,14 +177,15 @@ const Comments: FC<CommentsProps> = ({title, showButtons}) => {
                 <div ref={wrapperRef} style={{height: "32px", textDecoration: "none"}}>
                     <div onClick={toggleDropdown} style={{height: "100%"}}>
                         <ClosedSelectWrapper>
-                            <span>All</span>
+                            <span>{(onlyFollowedDisplayHandler()).toString()}</span>
                             <CustomIcons style={{height: "0.5em", marginLeft: "auto"}} src={"./media/icons/arrow-down.png"}/>
                         </ClosedSelectWrapper>
                     </div>
                     {dropdownOpen &&
-                        <div>
-                            <ExpandedCommentMenu />
-                        </div>
+                        <BlockWrapper>
+                            <Block onClick={followedButtonHandler}>All</Block>
+                            <Block onClick={followedButtonHandler}>Followed</Block>
+                        </BlockWrapper>
                     }
                 </div>
                 <div onClick={closeDropdown}/>

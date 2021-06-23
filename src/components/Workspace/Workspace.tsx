@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {} from "react";
 import styled from "styled-components";
 import WorkspaceInfo from "./WorkspaceInfo";
 import CorporateMatters from "./CorporateMatters";
@@ -8,14 +8,14 @@ const Wrapper = styled.div`
 
 `
 
-const Workspace: FC = () => {
+const Workspace = () => {
     return (
         <Wrapper>
-            <WorkspaceInfo></WorkspaceInfo>
+            <WorkspaceInfo/>
 
-            <CorporateMatters></CorporateMatters>
+            <CorporateMatters/>
 
-            <LatestUpdates></LatestUpdates>
+            <LatestUpdates/>
         </Wrapper>
     )
 }

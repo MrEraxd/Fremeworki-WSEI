@@ -23,14 +23,14 @@ const LeftMenu: FC = () => {
         <Wrapper>
             <ShortProfileWrapper/>
             <div style={{padding: "16px"}}>
-                <Link to="/publications">
+                <Link to="/mock">
                     <Row>
                         <img src={"./media/icons/publications.png"} alt={"publications"}/>
                         <span>Publications</span>
                     </Row>
                 </Link>
 
-                <Link to="/ecosystem">
+                <Link to="/mock">
                     <Row>
                         <img src={"./media/icons/ecosystem.png"}  alt={"ecosystem"}/>
                         <span>Ecosystem</span>

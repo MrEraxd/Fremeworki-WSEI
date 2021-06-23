@@ -1,5 +1,6 @@
 import React, {FC} from "react";
 import styled from "styled-components";
+import {ActualWorkspaceInfo} from "../MainWrapper/MainWrapper";
 
 const Wrapper = styled.div`
     margin-bottom: 32px;
@@ -49,20 +50,28 @@ const DescriptionBody = styled.div`
   
 `
 
-const WorkspaceInfo: FC = () => {
+const getLocalStorageInfo = () => {
+    // @ts-ignore
+    return JSON.parse(localStorage.getItem("actualWorkspace").toString());
+}
+
+const WorkspaceInfo = () => {
+
+    const info = getLocalStorageInfo();
+
     return (
         <Wrapper>
             <BackgroundPicture/>
             <DescriptionWrapper>
-                <DescriptionImg src="./media/icons/entities.png"/>
+                <DescriptionImg src={info.iconImgUrl}/>
                 <Description>
                     <DescriptionTopBar>
-                        <Title>Corporate holdings</Title>
+                        <Title>{info.title}</Title>
                         <SettingsButton src="./media/icons/cog.png"/>
                     </DescriptionTopBar>
 
                     <DescriptionBody>
-                        Lorem ipsum
+                        {info.body}
                     </DescriptionBody>
                 </Description>
 

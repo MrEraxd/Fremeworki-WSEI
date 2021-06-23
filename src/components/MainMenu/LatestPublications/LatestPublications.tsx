@@ -93,7 +93,7 @@ const LatestPublications: FC = () => {
                     { publicationsToDisplay }
                 </PublicationsInnerWrapper>
 
-                <Link to={"/publications"}>See more publications</Link>
+                <Link to={"/mock"}>See more publications</Link>
             </PublicationsWrapper>
         </Wrapper>
     );

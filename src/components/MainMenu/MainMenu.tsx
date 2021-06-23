@@ -1,4 +1,4 @@
-import React, {FC} from "react";
+import React, {FC, useState} from "react";
 import styled from "styled-components";
 import LatestPublications from "./LatestPublications/LatestPublications";
 import Workspaces from "./Workspaces/Workspaces";
@@ -8,11 +8,11 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 
-const MainMenu: FC = () => {
+export function MainMenu() {
     return (
         <Wrapper>
             <LatestPublications />
-            <Workspaces />
+            <Workspaces/>
             <Comments title={"Resume your work"} showButtons={false}/>
         </Wrapper>
     )
