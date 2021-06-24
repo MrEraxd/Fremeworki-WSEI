@@ -18,6 +18,7 @@ import {getPhotos} from "../../actions/photosActions";
 import Workspace from "../Workspace/Workspace";
 import Mock from "../Mock/Mock";
 import {getWorkspaces} from "../../actions/workspacesActions";
+import Entities from "../Entities/Entities";
 
 type GetUsers = ReturnType<typeof getUsers>
 type GetLoggedUser = ReturnType<typeof getLoggedUser>
@@ -70,7 +71,7 @@ const MainWrapper: FC = () => {
                     <MainContentWrapper>
                         <Switch>
                             <Route path='/entities'>
-                                entities
+                                <Entities />
                             </Route>
 
                             <Route path='/profile'>
