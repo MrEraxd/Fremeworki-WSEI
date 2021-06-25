@@ -25,6 +25,10 @@ const PaginationNav = styled.div`
   & > span {
     padding: 0 8px;
     color: #2A3F9D;
+    
+    &:hover {
+      cursor: pointer;
+    }
   }
 `
 
@@ -116,8 +120,9 @@ const Comments: FC<CommentsProps> = ({title, showButtons}) => {
 
     const [inputText, setInputText] = useState<string>('');
     const [onlyFollowed, showOnlyFollowed] = useState<boolean>(false);
+    const [pageNumber, setPageNumber] = useState<number>(0);
 
-    for(let i = 0; i < 100; i++) {
+    for(let i = pageNumber * 10; i < (pageNumber * 10) + 10; i++) {
         if(comments[i]?.name.toLowerCase().includes(inputText.toLowerCase())){
             if(onlyFollowed && comments[i]?.postId === loggedUser.id){
                 workToDisplay.push(<Comment
@@ -198,9 +203,9 @@ const Comments: FC<CommentsProps> = ({title, showButtons}) => {
             </WorkWrapper>
 
             <PaginationNav>
-                <span>PREVIOUS</span>
-                <span>01 02 03 04</span>
-                <span>NEXT</span>
+                <span onClick={() => setPageNumber(prevState => prevState - 1)}>PREVIOUS</span>
+                <span>{pageNumber + 1}</span>
+                <span onClick={() => setPageNumber(prevState => prevState + 1)}>NEXT</span>
             </PaginationNav>
         </Wrapper>
     )

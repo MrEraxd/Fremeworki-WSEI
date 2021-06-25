@@ -7,9 +7,20 @@ import {IState} from "../../reducers/reducers";
 import {ICommentReducer} from "../../reducers/commentsReducer";
 import {IPhotoReducer} from "../../reducers/photosReducer";
 import {IUsersReducer} from "../../reducers/usersReducres";
+import {ISingleComment} from "../../entities/comment";
 
 const Wrapper = styled.div`
   width: 100%;
+  
+  &.fullscreen{
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    background-color: #F5F7F9;
+    padding: 16px;
+    box-sizing: border-box;
+  }
 `;
 
 const TopBar = styled.div`
@@ -28,6 +39,10 @@ const LeftButtons = styled.div`
   & > * {
     margin: 0 8px;
   }
+  
+  & > *:hover{
+    cursor: pointer;
+  }
 `
 
 const RightButtons = styled.div`
@@ -41,6 +56,12 @@ const EntitiesWrapper = styled.div`
   &.mosaic {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    grid-gap: 8px;
+  }
+  
+  &.list {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
     grid-gap: 8px;
   }
 `
@@ -60,6 +81,10 @@ const DisplayTypeWrapper = styled.div`
 
 const TypeButton = styled.div`
   padding: 8px;
+  
+  &:hover{
+    cursor: pointer;
+  }
 `
 
 const FakeDropdown = styled.div`
@@ -191,10 +216,23 @@ const CustomInput = styled.input`
   padding: 8px;
 `
 
+function compare(a: ISingleComment, b: ISingleComment ) {
+    if ( a.name < b.name ){
+        return -1;
+    }
+    if ( a.name > b.name ){
+        return 1;
+    }
+    return 0;
+}
+
 export const Entities = () => {
 
     const [inputText, setInputText] = useState<string>('');
     const [onlyFollowed, showOnlyFollowed] = useState<boolean>(false);
+    const [sortType, setSortType] = useState<string>("A to Z");
+    const [displayType, setDisplayType] = useState<string>("mosaic");
+    const [displayFullscreen, setFullscreen] = useState<boolean>(false);
 
     const [wrapperRef, dropdownOpen, toggleDropdown, closeDropdown] = useDropdown();
     const [wrapperRef2, dropdownOpen2, toggleDropdown2, closeDropdown2] = useDropdown();
@@ -214,6 +252,16 @@ export const Entities = () => {
     const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const text = e.target.value;
         setInputText(text);
+    }
+
+    const toggleSortHandler = () => {
+        console.log("TEST")
+        if(sortType === "A to Z"){
+            setSortType("Z to A");
+            return;
+        }
+
+        setSortType("A to Z");
     }
 
     const followedButtonHandler = (e: MouseEvent) => {
@@ -236,25 +284,48 @@ export const Entities = () => {
     let entitiesToDisplay = [];
 
     for(let i = 0; i < 30; i++){
-        if(!comments[i].name.includes(inputText)){
+        if(!comments[i]?.name.includes(inputText)){
+            continue;
+        }
+
+        if(onlyFollowed && !(comments[i]?.postId === loggedUser.id)){
             continue;
         }
 
         entitiesToDisplay.push(<Entity
-            title={comments[i].name}
-            body={comments[i].body}
-            iconURL={photos[comments[i].id].url}
+            key={comments[i]?.name}
+            title={comments[i]?.name}
+            body={comments[i]?.body}
+            iconURL={photos[comments[i]?.id]?.url}
         />)
     }
 
+    if(sortType === "A to Z"){
+        // @ts-ignore
+        entitiesToDisplay.sort((a,b) => (a.key > b.key) ? 1 : ((b.key > a.key) ? -1 : 0));
+    } else {
+        // @ts-ignore
+        entitiesToDisplay.sort((a,b) => (a.key < b.key) ? 1 : ((b.key < a.key) ? -1 : 0));
+    }
+
+    const getWrapperClass = () => {
+        if(displayFullscreen){
+            return "fullscreen";
+        }
+    }
+
+    const toggleFullscreen = () => {
+        setFullscreen(!displayFullscreen);
+    }
+
     return (
-        <Wrapper>
+        <Wrapper className={getWrapperClass()}>
             <TopBar>
                 <Title>Entities</Title><CustomIcon src={"./media/icons/cog.png"}/>
 
                 <DisplayTypeWrapper>
-                    <TypeButton>M</TypeButton>
-                    <TypeButton>L</TypeButton>
+                    <TypeButton onClick={() => {setDisplayType("mosaic")}}>M</TypeButton>
+                    <TypeButton onClick={() => {setDisplayType("list")}}>L</TypeButton>
                 </DisplayTypeWrapper>
             </TopBar>
 
@@ -269,8 +340,7 @@ export const Entities = () => {
                     <CustomIcon src={"./media/icons/cog.png"} style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}/>
 
                     <SortButton>
-                        <CustomIcon src={"./media/icons/cog.png"} style={{marginRight: "6px"}}/>
-                        <span>Sort</span>
+                        <span onClick={() => toggleSortHandler()}>{sortType}</span>
                     </SortButton>
 
                     <FiltersButton style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}>
@@ -370,9 +440,12 @@ export const Entities = () => {
                         <div onClick={closeDropdown2}/>
                     </FiltersButton>
 
-                    <CustomIcon src={"./media/icons/cog.png"} style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}/>
+                    <CustomIcon onClick={() => toggleFullscreen()} src={"./media/icons/cog.png"} style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}/>
 
-                    <CustomIcon src={"./media/icons/cog.png"}/>
+                    <div onClick={() => {navigator.clipboard.writeText(window.location.href)}}>
+                        <CustomIcon src={"./media/icons/cog.png"} style={{marginRight: "8px"}}/>
+                        <span>Share</span>
+                    </div>
                 </LeftButtons>
 
                 <RightButtons style={{zIndex: 10}}>
@@ -395,7 +468,7 @@ export const Entities = () => {
                 </RightButtons>
             </FilterBar>
 
-            <EntitiesWrapper className={"mosaic"}  >
+            <EntitiesWrapper className={displayType}  >
                 {entitiesToDisplay}
             </EntitiesWrapper>
         </Wrapper>
