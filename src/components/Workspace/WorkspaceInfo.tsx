@@ -1,6 +1,5 @@
-import React, {FC} from "react";
+import React from "react";
 import styled from "styled-components";
-import {ActualWorkspaceInfo} from "../MainWrapper/MainWrapper";
 
 const Wrapper = styled.div`
     margin-bottom: 32px;

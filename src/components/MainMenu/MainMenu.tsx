@@ -1,4 +1,4 @@
-import React, {FC, useState} from "react";
+import React from "react";
 import styled from "styled-components";
 import LatestPublications from "./LatestPublications/LatestPublications";
 import Workspaces from "./Workspaces/Workspaces";

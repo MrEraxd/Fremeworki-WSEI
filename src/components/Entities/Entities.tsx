@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, MouseEvent, useState} from "react";
+import React, {ChangeEvent, MouseEvent, useState} from "react";
 import styled from "styled-components";
 import useDropdown from "react-dropdown-hook";
 import Entity from "./Entity";
@@ -324,20 +324,25 @@ export const Entities = () => {
                 <Title>Entities</Title><CustomIcon src={"./media/icons/cog.png"}/>
 
                 <DisplayTypeWrapper>
-                    <TypeButton onClick={() => {setDisplayType("mosaic")}}>M</TypeButton>
-                    <TypeButton onClick={() => {setDisplayType("list")}}>L</TypeButton>
+                    <TypeButton onClick={() => {setDisplayType("mosaic")}}>
+                        <CustomIcon src={"./media/icons/window-of-four-rounded-squares.png"} />
+                    </TypeButton>
+                    <TypeButton onClick={() => {setDisplayType("list")}}>
+                        <CustomIcon src={"./media/icons/list.png"} />
+                    </TypeButton>
+
                 </DisplayTypeWrapper>
             </TopBar>
 
             <FilterBar>
                 <LeftButtons>
                     <FakeDropdown>
-                        <CustomIcon src={"./media/icons/cog.png"}/>
+                        <CustomIcon src={"./media/icons/target-circles.png"}/>
                         <span>All</span>
                         <CustomIcon src={"./media/icons/arrow-down.png"} style={{fontSize: "0.4em"}}/>
                     </FakeDropdown>
 
-                    <CustomIcon src={"./media/icons/cog.png"} style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}/>
+                    <CustomIcon src={"./media/icons/more.png"} style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}/>
 
                     <SortButton>
                         <span onClick={() => toggleSortHandler()}>{sortType}</span>
@@ -346,7 +351,7 @@ export const Entities = () => {
                     <FiltersButton style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}>
                         <div ref={wrapperRef2} style={{textDecoration: "none"}}>
                             <div className={"showFilters"} onClick={toggleDropdown2}>
-                                <CustomIcon  src={"./media/icons/cog.png"} style={{marginRight: "6px"}}/>
+                                <CustomIcon  src={"./media/icons/filter.png"} style={{marginRight: "6px"}}/>
                                 <span>Filters</span>
                             </div>
                             {dropdownOpen2 &&
@@ -440,10 +445,10 @@ export const Entities = () => {
                         <div onClick={closeDropdown2}/>
                     </FiltersButton>
 
-                    <CustomIcon onClick={() => toggleFullscreen()} src={"./media/icons/cog.png"} style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}/>
+                    <CustomIcon onClick={() => toggleFullscreen()} src={"./media/icons/full-size.png"} style={{borderRight: "2px solid #E8E8E8", paddingRight: "16px"}}/>
 
                     <div onClick={() => {navigator.clipboard.writeText(window.location.href)}}>
-                        <CustomIcon src={"./media/icons/cog.png"} style={{marginRight: "8px"}}/>
+                        <CustomIcon src={"./media/icons/share.png"} style={{marginRight: "8px"}}/>
                         <span>Share</span>
                     </div>
                 </LeftButtons>

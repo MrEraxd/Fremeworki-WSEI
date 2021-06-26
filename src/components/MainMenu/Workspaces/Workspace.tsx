@@ -1,4 +1,3 @@
-import {FC, MouseEvent} from "react";
 import styled from "styled-components";
 import {IWorkspaceInfo} from "../../../entities/workspace";
 import {Link} from "react-router-dom"
@@ -9,7 +8,7 @@ const Wrapper = styled.div`
     display: flex;
     height: 220px;
     flex-flow: column;
-  box-shadow: 0px 3px 10px -5px rgba(0,0,0,0.56);
+  box-shadow: 0 3px 10px -5px rgba(0,0,0,0.56);
 `;
 
 const BackgroundImage = styled.img`

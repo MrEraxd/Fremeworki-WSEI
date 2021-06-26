@@ -6,9 +6,8 @@ import {IUsersReducer} from "../../reducers/usersReducres";
 import {IPhotoReducer} from "../../reducers/photosReducer";
 
 const Wrapper = styled.div`
-    display: flex;
-  padding: 16px;
-  padding-left: 0;
+  display: flex;
+  padding: 16px 16px 16px 0;
   border-bottom: 1px solid #E8E8E8;
   margin-bottom: 16px;
 `
@@ -44,7 +43,7 @@ const BasicInfo: FC = () => {
             <ProfilePicture src={photos[loggedUser.id]?.thumbnailUrl} alt={"Profile photo"}/>
 
             <InnerWrapper>
-                <Bold>{loggedUser.username}</Bold>
+                <Bold>{loggedUser.name}</Bold>
                 <Bold>{loggedUser.company.name}</Bold>
                 <div style={{display: "flex"}}>
                     <span>{loggedUser.address.city}</span>

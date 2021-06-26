@@ -1,9 +1,5 @@
 import React, {FC} from "react";
 import styled from "styled-components";
-import {useSelector} from "react-redux";
-import {IState} from "../../reducers/reducers";
-import {IUsersReducer} from "../../reducers/usersReducres";
-import {IPhotoReducer} from "../../reducers/photosReducer";
 
 const Wrapper = styled.div`
   padding-bottom: 16px;
@@ -52,7 +48,7 @@ const PanelInformations: FC = () => {
                 <RowTitle>Terms & conditions</RowTitle>
                 <div>Monthly 10k€ retainer - see with Jeanny Smith</div>
                 <Attachment>
-                    <AttachmentIcon src={"./media/icons/entities.png"}></AttachmentIcon>
+                    <AttachmentIcon src={"./media/icons/document.png"}/>
                     <span>Attachment_lorem-ipsum25425.jpg</span>
                 </Attachment>
             </Row>

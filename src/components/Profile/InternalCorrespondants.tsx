@@ -59,7 +59,7 @@ const InternalCorrespondants: FC = () => {
                 <Picture src={"./media/icons/people.png"}/>
                 <span>Firstname Lastname</span>
                 <MessageButton>
-                    <ButtonIcon src={"./media/icons/bell.png"}/>
+                    <ButtonIcon src={"./media/icons/messenger.png"}/>
                     <span>Message</span>
                 </MessageButton>
 
@@ -73,7 +73,7 @@ const InternalCorrespondants: FC = () => {
                 <Picture src={"./media/icons/people.png"}/>
                 <span>Firstname Lastname</span>
                 <MessageButton>
-                    <ButtonIcon src={"./media/icons/bell.png"}/>
+                    <ButtonIcon src={"./media/icons/messenger.png"}/>
                     <span>Message</span>
                 </MessageButton>
 

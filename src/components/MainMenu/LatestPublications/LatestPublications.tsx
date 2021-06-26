@@ -6,6 +6,7 @@ import {IState} from "../../../reducers/reducers";
 import {IPublicationReducer} from "../../../reducers/publicationsReducer";
 import {IUsersReducer} from "../../../reducers/usersReducres";
 import { Link } from "react-router-dom";
+import {IPhotoReducer} from "../../../reducers/photosReducer";
 
 const Wrapper = styled.div`
     margin-bottom: 24px;
@@ -56,6 +57,10 @@ const LatestPublications: FC = () => {
         ...state.users
     }))
 
+    const { photos } = useSelector<IState, IPhotoReducer>(state => ({
+        ...state.photos
+    }))
+
     let publicationsToDisplay = [];
 
     for(let i = 0; i < 3; i++){
@@ -64,6 +69,7 @@ const LatestPublications: FC = () => {
                 key={i + "Publication"}
                 title={publications[i * 10]?.title}
                 username={usersList[publications[i * 10]?.userId]?.username}
+                imgUrl={photos[publications[i * 10]?.userId]?.url}
             />
         )
     }

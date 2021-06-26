@@ -30,13 +30,14 @@ const PublicationInfo = styled.div`
 interface IProps {
     title: string;
     username: string
+    imgUrl: string;
 }
 
 
 const Publication = (props: IProps) => {
     return (
         <Wrapper>
-            <PublicationPicture src={"/media/PublicationPlaceholder.jpg"}/>
+            <PublicationPicture src={props.imgUrl}/>
 
             <InnerWrapper>
                 <PublicationTitle>{props?.title}</PublicationTitle>

@@ -26,15 +26,15 @@ const ProfileNav: FC = () => {
         <Wrapper>
             <InnerWrapper>
                 <Button>
-                    <ButtonIcon src={"./media/icons/ecosystem.png"}/>
+                    <ButtonIcon src={"./media/icons/messenger.png"}/>
                     <span>Message</span>
                 </Button>
                 <Button>
-                    <ButtonIcon src={"./media/icons/ecosystem.png"}/>
+                    <ButtonIcon src={"./media/icons/document.png"}/>
                     <span>Create a request</span>
                 </Button>
                 <Button>
-                    <ButtonIcon src={"./media/icons/ecosystem.png"}/>
+                    <ButtonIcon src={"./media/icons/briefcase.png"}/>
                     <span>Add to a cluster</span>
                 </Button>
             </InnerWrapper>

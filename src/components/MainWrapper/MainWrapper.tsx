@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from "react";
+import React, {FC, useEffect} from "react";
 import TopNav from "../TopNav/TopNav";
 import LeftMenu from "../LeftMenu/LeftMenu";
 import MainMenu from "../MainMenu/MainMenu";
@@ -42,13 +42,6 @@ const Content = styled.div`
   margin-left: auto;
   margin-right: auto;
 `
-
-export interface ActualWorkspaceInfo {
-    iconURL: string;
-    title: string;
-    body: string;
-}
-
 
 const MainWrapper: FC = () => {
     const dispatch = useDispatch();
